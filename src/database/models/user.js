@@ -1,18 +1,20 @@
 const sequelize = require("sequelize");
 
-const createUser = (sequelize, DataTypes) => {
+const createUserModel = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    id: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
     displayName: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     image: DataTypes.STRING,
   }, {
-    tableName: 'User',
-    underscored: true,
+    timestamps: false,
   });
 
   return User;
 };
 
-module.exports = createUser;
+module.exports = createUserModel;
