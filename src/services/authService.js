@@ -5,9 +5,18 @@ const { runSchema } = require('./utils');
 
 const authService = {
   validateBody: runSchema(Joi.object({
-      email: Joi.string().email(),
-      password: Joi.string(),
-    }).required()),
+      email: Joi.string()
+        .email()
+        .required()
+        .not()
+        .empty()
+        .messages({ 'string.empty': 'Some required fields are missing' }),
+      password: Joi.string()
+        .required()
+        .not()
+        .empty()
+        .messages({ 'string.empty': 'Some required fields are missing' }),
+    })),
 
   login: async (email, loginPassword) => {
     const user = await db.User.findOne({ 
