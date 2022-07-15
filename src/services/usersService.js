@@ -32,6 +32,18 @@ const usersService = {
 
     return users;
   },
+
+  getById: async (id) => {
+    const user = await User.findByPk(id, {
+      attributes: { exclude: ['password'] } });
+    if (!user) {
+      const error = new Error('User does not exist');
+      error.name = 'NotFoundError';
+      error.code = 404;
+      throw error;
+    }
+    return user.dataValues;
+  },
 };
 
 module.exports = usersService;
