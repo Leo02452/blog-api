@@ -8,6 +8,12 @@ const usersController = {
 
     res.status(201).json({ token });
   },
+
+  getAll: async (_req, res) => {
+    const users = await usersService.getAll();
+
+    res.status(200).json(users);
+  },
 };
 
 module.exports = usersController;
