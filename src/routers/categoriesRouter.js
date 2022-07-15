@@ -7,5 +7,6 @@ const router = Router();
 
 router.use(authController.validateToken);
 router.post('/', categoriesController.create);
+router.get('/', categoriesController.getAll);
 
 module.exports = router;
