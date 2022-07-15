@@ -8,6 +8,14 @@ const authController = {
 
     res.status(200).json({ token });
   },
+
+  validateToken: (req, _res, next) => {
+    const { authorization } = req.headers;
+   
+    authService.validateToken(authorization);
+
+    next();
+  },
 };
 
 module.exports = authController;
