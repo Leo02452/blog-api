@@ -26,6 +26,7 @@ const authService = {
     if (!user || user.password !== loginPassword) {
       const error = new Error('Invalid fields');
       error.name = 'UnauthorizedError';
+      error.code = 400;
       throw error;
     }
 
@@ -40,6 +41,7 @@ const authService = {
     if (!token) {
       const error = new Error('Token not found');
       error.name = 'UnauthorizedError';
+      error.code = 401;
       throw error;
     }
     const data = jwtService.validateToken(token);
