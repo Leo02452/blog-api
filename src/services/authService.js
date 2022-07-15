@@ -35,6 +35,16 @@ const authService = {
 
     return token;
   },
+
+  validateToken: (token) => {
+    if (!token) {
+      const error = new Error('Token not found');
+      error.name = 'UnauthorizedError';
+      throw error;
+    }
+    const data = jwtService.validateToken(token);
+    return data;
+  },
 };
 
 module.exports = authService;
