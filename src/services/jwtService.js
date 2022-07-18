@@ -9,7 +9,7 @@ const jwtService = {
 
   validateToken: (token) => {
     try {
-      const data = jwt.verify(token, process.env.JWT_SECRET);
+      const { data } = jwt.verify(token, process.env.JWT_SECRET);
       return data;
     } catch (e) {
       const error = new Error('Expired or invalid token');

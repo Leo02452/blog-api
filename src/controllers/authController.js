@@ -12,7 +12,9 @@ const authController = {
   validateToken: (req, _res, next) => {
     const { authorization } = req.headers;
    
-    authService.validateToken(authorization);
+    const userData = authService.validateToken(authorization);
+
+    req.user = userData;
 
     next();
   },

@@ -44,8 +44,8 @@ const authService = {
       error.code = 401;
       throw error;
     }
-    const data = jwtService.validateToken(token);
-    return data;
+    const userData = jwtService.validateToken(token);
+    return userData;
   },
 };
 
