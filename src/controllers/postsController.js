@@ -22,10 +22,11 @@ const postsController = {
         .create({ title, content, userId: user.id }, { transaction: t });
 
       const postCategoryPromises = categoryIds
-        .map((categoryId) => postCategoryService.create({ postId: blogPostCreated.id, categoryId }), { transaction: t })
+        .map((categoryId) => postCategoryService
+          .create({ postId: blogPostCreated.id, categoryId }), { transaction: t });
       await Promise.all(postCategoryPromises);
 
-      return blogPostCreated
+      return blogPostCreated;
     });
 
     res.status(201).json(newBlogPost);
