@@ -22,7 +22,7 @@ const postsService = {
     const data = await db.BlogPost.findAll({
       include: [
         { model: db.User, as: 'user', attributes: { exclude: ['password'] } },
-        { model: db.Category, as: 'categories', through: { attributes: []} },
+        { model: db.Category, as: 'categories', through: { attributes: [] } },
       ],
     });
 
