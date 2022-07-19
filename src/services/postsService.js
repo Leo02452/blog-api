@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { BlogPost } = require('../database/models');
+const db = require('../database/models');
 const { runSchema } = require('./utils');
 
 const postsService = {
@@ -13,9 +13,20 @@ const postsService = {
   })),
 
   create: async ({ title, content, userId }) => {
-    const blogPost = await BlogPost.create({ title, content, userId });
+    const blogPost = await db.BlogPost.create({ title, content, userId });
 
     return blogPost.dataValues;
+  },
+
+  list: async () => {
+    const data = await db.BlogPost.findAll({
+      include: [
+        { model: db.User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: db.Category, as: 'categories', through: { attributes: []} },
+      ],
+    });
+
+    return data;
   },
 };
 
