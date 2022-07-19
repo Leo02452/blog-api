@@ -31,6 +31,12 @@ const postsController = {
 
     res.status(201).json(newBlogPost);
   },
+
+  list: async (_req, res) => {
+    const allPosts = await postsService.list();
+
+    res.status(200).json(allPosts);
+  },
 };
 
 module.exports = postsController;
