@@ -1,5 +1,6 @@
 require('dotenv/config');
 const jwt = require('jsonwebtoken');
+const { throwError } = require('./utils');
 
 const jwtService = {
   createToken: (data) => {
@@ -12,10 +13,7 @@ const jwtService = {
       const { data } = jwt.verify(token, process.env.JWT_SECRET);
       return data;
     } catch (e) {
-      const error = new Error('Expired or invalid token');
-      error.name = 'UnauthorizedError';
-      error.code = 401;
-      throw error;
+      throwError('Expired or invalid token', 401);
     }
   },
 };

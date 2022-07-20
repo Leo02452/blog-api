@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { User } = require('../database/models');
 const jwtService = require('./jwtService');
-const { runSchema } = require('./utils');
+const { runSchema, throwError } = require('./utils');
 
 const usersService = {
   validateBody: runSchema(Joi.object({
@@ -14,20 +14,14 @@ const usersService = {
   checkIfNotExists: async (email) => {
     const isUserAlreadyCreated = await User.findOne({ where: { email } });
     if (isUserAlreadyCreated !== null) {
-      const error = new Error('User already registered');
-      error.name = 'ConflictError';
-      error.code = 409;
-      throw error;
+      throwError('User already registered', 409);
     }
   },
 
   checkIfExists: async (id) => {
     const user = await User.findByPk(id);
     if (!user) {
-      const error = new Error('User does not exist');
-      error.name = 'NotFoundError';
-      error.code = 404;
-      throw error;
+      throwError('User does not exist', 404);
     }
   },
 

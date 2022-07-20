@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const db = require('../database/models');
 const jwtService = require('./jwtService');
-const { runSchema } = require('./utils');
+const { runSchema, throwError } = require('./utils');
 
 const authService = {
   validateBody: runSchema(Joi.object({
@@ -24,10 +24,7 @@ const authService = {
     });
 
     if (!user || user.password !== loginPassword) {
-      const error = new Error('Invalid fields');
-      error.name = 'UnauthorizedError';
-      error.code = 400;
-      throw error;
+      throwError('Invalid fields', 400);
     }
 
     const { password, ...userWithoutPassword } = user.dataValues;
@@ -39,10 +36,7 @@ const authService = {
 
   validateToken: (token) => {
     if (!token) {
-      const error = new Error('Token not found');
-      error.name = 'UnauthorizedError';
-      error.code = 401;
-      throw error;
+      throwError('Token not found', 401);
     }
     const userData = jwtService.validateToken(token);
     return userData;

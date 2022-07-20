@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { Op } = require('sequelize');
 const db = require('../database/models');
-const { runSchema } = require('./utils');
+const { runSchema, throwError } = require('./utils');
 
 const postsService = {
   validateBody: runSchema(Joi.object({
@@ -12,6 +12,19 @@ const postsService = {
     categoryIds: Joi.array().items(Joi.number())
     .messages({ 'array.empty': 'Some required fields are missing' }),
   })),
+
+  checkIfExists: async (id) => {
+    const post = await db.BlogPost.findByPk(id);
+    if (!post) {
+      throwError('Post does not exist', 404);
+    }
+  },
+
+  checkPostOwner: async (reqUserId, postOwnerId) => {
+    if (reqUserId !== postOwnerId) {
+      throwError('Unauthorized user', 401);
+    }
+  },
 
   create: async ({ title, content, userId }) => {
     const blogPost = await db.BlogPost.create({ title, content, userId });
@@ -39,31 +52,12 @@ const postsService = {
     });
 
     if (!post) {
-      const error = new Error('Post does not exist');
-      error.code = 404;
-      throw error;
+      throwError('Post does not exist', 404);
     }
 
     return post;
   },
 
-  checkIfExists: async (id) => {
-    const post = await db.BlogPost.findByPk(id);
-      if (!post) {
-        const error = new Error('Post does not exist');
-        error.code = 404;
-        throw error;
-    }
-  },
-
-  checkPostOwner: async (reqUserId, postOwnerId) => {
-    if (reqUserId !== postOwnerId) {
-      const error = new Error('Unauthorized user');
-      error.code = 401;
-      throw error;
-    }
-  },
-  
   update: async (title, content, postId, userId) => {
     await db.BlogPost.upsert({ id: postId, title, content, userId });
   },
