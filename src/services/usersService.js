@@ -11,7 +11,7 @@ const usersService = {
     image: Joi.string(),
   })),
 
-  create: async ({ displayName, email, pword, image }) => {
+  checkIfNotExists: async (email) => {
     const isUserAlreadyCreated = await User.findOne({ where: { email } });
     if (isUserAlreadyCreated !== null) {
       const error = new Error('User already registered');
@@ -19,6 +19,9 @@ const usersService = {
       error.code = 409;
       throw error;
     }
+  },
+
+  createUserAndToken: async ({ displayName, email, pword, image }) => {
     const user = await User.create({ displayName, email, password: pword, image });
     const { password, ...userWithoutPassword } = user.dataValues;
 
