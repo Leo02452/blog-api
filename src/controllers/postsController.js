@@ -72,6 +72,14 @@ const postsController = {
     await postsService.remove(id);
     res.sendStatus(204);
   },
+
+  getByTitleOrContent: async (req, res) => {
+    const { q } = req.query;
+
+    const searchResult = await postsService.getByTitleOrContent(q);
+
+    res.status(200).json(searchResult);
+  },
 };
 
 module.exports = postsController;

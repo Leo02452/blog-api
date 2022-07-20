@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { Op } = require('sequelize');
 const db = require('../database/models');
 const { runSchema } = require('./utils');
 
@@ -69,6 +70,23 @@ const postsService = {
 
   remove: async (id) => {
     await db.BlogPost.destroy({ where: { id } });
+  },
+
+  getByTitleOrContent: async (searchTerm) => {
+    const searchResult = await db.BlogPost.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${searchTerm}%` } },
+          { content: { [Op.like]: `%${searchTerm}%` } },
+        ],
+      },
+      include: [
+        { model: db.User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: db.Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+
+    return searchResult;
   },
 };
 
