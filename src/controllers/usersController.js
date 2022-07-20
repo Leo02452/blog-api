@@ -9,10 +9,10 @@ const usersController = {
     res.status(201).json({ token });
   },
 
-  getAll: async (_req, res) => {
-    const users = await usersService.getAll();
+  list: async (_req, res) => {
+    const allUsers = await usersService.list();
 
-    res.status(200).json(users);
+    res.status(200).json(allUsers);
   },
 
   getById: async (req, res) => {

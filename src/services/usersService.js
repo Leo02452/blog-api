@@ -27,7 +27,7 @@ const usersService = {
     return token;
   },
 
-  getAll: async () => {
+  list: async () => {
     const users = await User.findAll({ attributes: { exclude: ['password'] } });
 
     return users;
