@@ -14,7 +14,7 @@ const postsController = {
     const { title, content, categoryIds } = postsService.validateBody(req.body);
 
     const categoryIdsPromises = categoryIds
-    .map((categoryId) => categoriesService.checkIfExists(categoryId));
+      .map((categoryId) => categoriesService.checkIfExists(categoryId));
     await Promise.all(categoryIdsPromises);
     
     const newBlogPost = await sequelize.transaction(async (t) => {

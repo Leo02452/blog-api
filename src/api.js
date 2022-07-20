@@ -16,8 +16,6 @@ app.use('/login', authRouter);
 app.use('/user', usersRouter);
 app.use('/categories', categoriesRouter);
 app.use('/post', postsRouter);
-
 app.use(errorMiddleware);
-// É importante exportar a constante `app`,
-// para que possa ser utilizada pelo arquivo `src/server.js`
+
 module.exports = app;

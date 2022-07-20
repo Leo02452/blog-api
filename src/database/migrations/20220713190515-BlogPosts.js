@@ -20,7 +20,6 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
-
       },
       published: Sequelize.DATE,
       updated: Sequelize.DATE,
