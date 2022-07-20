@@ -46,7 +46,7 @@ const usersService = {
   },
 
   remove: async (id) => {
-    await User.destroy({ where: { id } })
+    await User.destroy({ where: { id } });
   },
 };
 

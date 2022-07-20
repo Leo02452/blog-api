@@ -48,12 +48,10 @@ const postsService = {
 
   checkIfExists: async (id) => {
     const post = await db.BlogPost.findByPk(id);
-    if (!post) {
       if (!post) {
         const error = new Error('Post does not exist');
         error.code = 404;
         throw error;
-      }  
     }
   },
 
