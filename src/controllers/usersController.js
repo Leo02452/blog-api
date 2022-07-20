@@ -22,6 +22,14 @@ const usersController = {
 
     res.status(200).json(user);
   },
+
+  remove: async (req, res) => {
+    const { user } = req;
+
+    await usersService.remove(user.id);
+
+    res.sendStatus(204);
+  },
 };
 
 module.exports = usersController;

@@ -9,5 +9,6 @@ router.post('/', usersController.create);
 router.use(authController.validateToken);
 router.get('/:id', usersController.getById);
 router.get('/', usersController.getAll);
+router.delete('/me', usersController.remove);
 
 module.exports = router;
