@@ -9,8 +9,8 @@ const categoriesController = {
     res.status(201).json(categoryCreated);
   },
 
-  getAll: async (req, res) => {
-    const categories = await categoriesService.getAll();
+  list: async (_req, res) => {
+    const categories = await categoriesService.list();
 
     res.status(200).json(categories);
   },

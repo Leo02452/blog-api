@@ -7,16 +7,6 @@ const categoriesService = {
     name: Joi.string().required(),
   })),
 
-  create: async ({ name }) => {
-    const category = await Category.create({ name });
-    return category.dataValues;
-  },
-
-  getAll: async () => {
-    const categories = await Category.findAll();
-    return categories;
-  },
-
   checkIfExists: async (id) => {
     const category = await Category.findByPk(id);
     if (!category) {
@@ -24,6 +14,16 @@ const categoriesService = {
       error.code = 400;
       throw error;
     }
+  },
+
+  create: async ({ name }) => {
+    const category = await Category.create({ name });
+    return category.dataValues;
+  },
+
+  list: async () => {
+    const categories = await Category.findAll();
+    return categories;
   },
 };
 
