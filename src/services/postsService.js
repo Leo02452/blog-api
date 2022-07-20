@@ -28,6 +28,23 @@ const postsService = {
 
     return data;
   },
+
+  getById: async (id) => {
+    const post = await db.BlogPost.findByPk(id, {
+      include: [
+        { model: db.User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: db.Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+
+    if (!post) {
+      const error = new Error('Post does not exist');
+      error.code = 404;
+      throw error;
+    }
+
+    return post;
+  },
 };
 
 module.exports = postsService;
