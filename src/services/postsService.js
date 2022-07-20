@@ -46,6 +46,17 @@ const postsService = {
     return post;
   },
 
+  checkIfExists: async (id) => {
+    const post = await db.BlogPost.findByPk(id);
+    if (!post) {
+      if (!post) {
+        const error = new Error('Post does not exist');
+        error.code = 404;
+        throw error;
+      }  
+    }
+  },
+
   checkPostOwner: async (reqUserId, postOwnerId) => {
     if (reqUserId !== postOwnerId) {
       const error = new Error('Unauthorized user');
