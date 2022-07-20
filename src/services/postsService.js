@@ -47,7 +47,7 @@ const postsService = {
   },
 
   checkPostOwner: async (reqUserId, postOwnerId) => {
-    if(reqUserId !== postOwnerId) {
+    if (reqUserId !== postOwnerId) {
       const error = new Error('Unauthorized user');
       error.code = 401;
       throw error;
