@@ -44,7 +44,21 @@ const postsController = {
     const post = await postsService.getById(id);
 
     res.status(200).json(post);
+  },
 
+  update: async (req, res) => {
+    const { id } = req.params;
+    const { user } = req;
+
+    const { title, content } = postsService.validateBody(req.body);
+    const post = await postsService.getById(id);
+    await postsService.checkPostOwner(user.id, post.user.id);
+
+    await postsService.update(title, content, id, user.id);
+
+    const postUpdated = await postsService.getById(id);
+
+    res.status(200).json(postUpdated);
   },
 };
 

@@ -8,7 +8,7 @@ const postsService = {
       .messages({ 'string.empty': 'Some required fields are missing' }),
     content: Joi.string().required()
       .messages({ 'string.empty': 'Some required fields are missing' }),
-    categoryIds: Joi.array().items(Joi.number()).required()
+    categoryIds: Joi.array().items(Joi.number())
     .messages({ 'array.empty': 'Some required fields are missing' }),
   })),
 
@@ -44,6 +44,18 @@ const postsService = {
     }
 
     return post;
+  },
+
+  checkPostOwner: async (reqUserId, postOwnerId) => {
+    if(reqUserId !== postOwnerId) {
+      const error = new Error('Unauthorized user');
+      error.code = 401;
+      throw error;
+    }
+  },
+  
+  update: async (title, content, postId, userId) => {
+    await db.BlogPost.upsert({ id: postId, title, content, userId });
   },
 };
 
