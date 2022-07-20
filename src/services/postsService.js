@@ -68,6 +68,10 @@ const postsService = {
   update: async (title, content, postId, userId) => {
     await db.BlogPost.upsert({ id: postId, title, content, userId });
   },
+
+  remove: async (id) => {
+    await db.BlogPost.destroy({ where: { id } });
+  },
 };
 
 module.exports = postsService;

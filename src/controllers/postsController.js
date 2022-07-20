@@ -60,6 +60,18 @@ const postsController = {
 
     res.status(200).json(postUpdated);
   },
+
+  remove: async (req, res) => {
+    const { id } = req.params;
+    const { user } = req;
+
+    await postsService.checkIfExists(id);
+    const post = await postsService.getById(id);
+    await postsService.checkPostOwner(user.id, post.user.id);
+
+    await postsService.remove(id);
+    res.sendStatus(204);
+  },
 };
 
 module.exports = postsController;
