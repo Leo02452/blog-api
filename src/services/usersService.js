@@ -43,7 +43,7 @@ const usersService = {
   getById: async (id) => {
     const user = await User.findByPk(id, {
       attributes: { exclude: ['password'] } });
-    return user.dataValues;
+    return user;
   },
 
   remove: async (id) => {

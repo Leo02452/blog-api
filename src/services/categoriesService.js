@@ -16,7 +16,7 @@ const categoriesService = {
 
   create: async ({ name }) => {
     const category = await Category.create({ name });
-    return category.dataValues;
+    return category;
   },
 
   list: async () => {

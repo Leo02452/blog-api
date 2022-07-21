@@ -30,7 +30,7 @@ const postsService = {
   create: async ({ title, content, userId }) => {
     const blogPost = await db.BlogPost.create({ title, content, userId });
 
-    return blogPost.dataValues;
+    return blogPost;
   },
 
   list: async () => {

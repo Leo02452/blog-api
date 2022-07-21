@@ -4,7 +4,7 @@ const postCategoryService = {
   create: async ({ postId, categoryId }) => {
     const blogPost = await PostCategory.create({ postId, categoryId });
 
-    return blogPost.dataValues;
+    return blogPost;
   },
 };
 
