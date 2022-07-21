@@ -51,8 +51,7 @@ const postsController = {
     const { user } = req;
 
     const { title, content } = postsService.validateBody(req.body);
-    const post = await postsService.getById(id);
-    await postsService.checkPostOwner(user.id, post.user.id);
+    await postsService.checkPostOwner(user.id, id);
 
     await postsService.update(title, content, id, user.id);
 
@@ -66,8 +65,7 @@ const postsController = {
     const { user } = req;
 
     await postsService.checkIfExists(id);
-    const post = await postsService.getById(id);
-    await postsService.checkPostOwner(user.id, post.user.id);
+    await postsService.checkPostOwner(user.id, id);
 
     await postsService.remove(id);
     res.sendStatus(204);

@@ -20,8 +20,9 @@ const postsService = {
     }
   },
 
-  checkPostOwner: async (reqUserId, postOwnerId) => {
-    if (reqUserId !== postOwnerId) {
+  checkPostOwner: async (reqUserId, postId) => {
+    const { userId } = await db.BlogPost.findByPk(postId);
+    if (reqUserId !== userId) {
       throwError('Unauthorized user', 401);
     }
   },
