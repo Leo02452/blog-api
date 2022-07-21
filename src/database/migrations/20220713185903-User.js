@@ -10,13 +10,18 @@ module.exports = {
         autoIncrement: true,
       },
       displayName: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING,
         unique: true,
       },
-      password: Sequelize.STRING,
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       image: Sequelize.STRING,
     });
   },
