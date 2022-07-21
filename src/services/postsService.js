@@ -52,10 +52,6 @@ const postsService = {
       ],
     });
 
-    if (!post) {
-      throwError('Post does not exist', 404);
-    }
-
     return post;
   },
 

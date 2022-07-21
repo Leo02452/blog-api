@@ -41,6 +41,8 @@ const postsController = {
   getById: async (req, res) => {
     const { id } = req.params;
 
+    await postsService.checkIfExists(id);
+
     const post = await postsService.getById(id);
 
     res.status(200).json(post);
