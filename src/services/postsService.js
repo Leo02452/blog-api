@@ -5,12 +5,12 @@ const { runSchema, throwError } = require('./utils');
 
 const postsService = {
   validateBody: runSchema(Joi.object({
-    title: Joi.string().required()
-      .messages({ 'string.empty': 'Some required fields are missing' }),
-    content: Joi.string().required()
-      .messages({ 'string.empty': 'Some required fields are missing' }),
-    categoryIds: Joi.array().items(Joi.number())
-    .messages({ 'array.empty': 'Some required fields are missing' }),
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+    categoryIds: Joi.array().items(Joi.number()),
+  }).messages({
+    'array.empty': 'Some required fields are missing',
+    'string.empty': 'Some required fields are missing',
   })),
 
   checkIfExists: async (id) => {
